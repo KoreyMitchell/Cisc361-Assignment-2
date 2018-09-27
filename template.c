@@ -1,15 +1,3 @@
-/***************************************************************************//**
-
-  @file         main.c
-
-  @author       Stephen Brennan
-
-  @date         Thursday,  8 January 2015
-
-  @brief        LSH (Libstephen SHell)
-
-*******************************************************************************/
-
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -24,7 +12,7 @@ char *prm = NULL;
 int blu_cd(char **args);
 int blu_help(char **args);
 int blu_exit(char **args);
-int blu_prompt();
+int blu_prompt(char **args);
 char *getcwd(char *buf, size_t size);
 
 
@@ -46,14 +34,30 @@ int (*builtin_func[]) (char **) = {
   &blu_prompt,
 };
 
-int blu_prompt(){
-  printf("Input prompt prefix: ");
-  char prefix[10];
-  fgets(prefix,10,stdin);
-  int len = strlen(prefix);
-  prefix[len-1] = '\0';
-  strcpy(prm,prefix);
-  return 1;
+// int blu_prompt(){
+//   printf("Input prompt prefix: ");
+//   char prefix[10];
+//   fgets(prefix,10,stdin);
+//   int len = strlen(prefix);
+//   prefix[len-1] = '\0';
+//   strcpy(prm,prefix);
+//   return 1;
+// }
+
+int blu_prompt(char **args){
+  if (args[1] == NULL) {
+    printf("Input prompt prefix: ");
+    char prefix[10];
+    fgets(prefix,10,stdin);
+    int len = strlen(prefix);
+    prefix[len-1] = '\0';
+    strcpy(prm,prefix);
+    return 1;
+  } else {
+    strcpy(prm,args[1]);
+    return 1;
+  }
+
 }
 
 
